@@ -8,6 +8,38 @@
         body {
             font-family: Arial, sans-serif;
             margin: 40px;
+
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+
+        /* Dark mode styles */
+        body.dark {
+            background-color: #333;
+            color: #f4f4f4;
+        }
+
+        body.dark h1 {
+            color: #ecf0f1;
+        }
+
+        /* Theme toggle button */
+        #theme-toggle {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            cursor: pointer;
+
             background-color: #ffffff;
         }
         h1 { color: #2c3e50; }
@@ -30,15 +62,21 @@
                 linear-gradient(#e0e0e0 1px, transparent 1px),
                 linear-gradient(90deg, #e0e0e0 1px, transparent 1px);
             background-size: 20px 20px;
+
         }
     </style>
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
+
+    <button id="theme-toggle" aria-label="Toggle theme"></button>
+
     <button class="icon-button" onclick="toggleGrid()" aria-label="Toggle grid background">
         <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M3 3h7v7H3V3zm0 11h7v7H3v-7zm11-11h7v7h-7V3zm0 11h7v7h-7v-7z"/>
         </svg>
     </button>
+
     <h1>Edukaizen Edu Fund</h1>
     <p><strong>Empowering education for tomorrow.</strong></p>
     <ul>
@@ -46,6 +84,34 @@
         <li>Flexible repayment plans to support learning journeys.</li>
         <li>Resources and guidance to maximize educational impact.</li>
         <li>Building a community driven by knowledge and growth.</li>
+
+</ul>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const button = document.getElementById('theme-toggle');
+            const body = document.body;
+
+            // Apply stored theme preference
+            const stored = localStorage.getItem('theme');
+            if (stored === 'dark') {
+                body.classList.add('dark');
+            }
+
+            function updateIcon() {
+                const name = body.classList.contains('dark') ? 'sun' : 'moon';
+                button.innerHTML = lucide.icons[name].toSvg({ width: 24, height: 24 });
+            }
+
+            button.addEventListener('click', function () {
+                body.classList.toggle('dark');
+                localStorage.setItem('theme', body.classList.contains('dark') ? 'dark' : 'light');
+                updateIcon();
+            });
+
+            updateIcon();
+        });
+    </script>
+
     </ul>
 
     <h2>Connect with us</h2>
@@ -60,6 +126,7 @@
         }
     </script>
   
+
 </body>
 </html>
 
